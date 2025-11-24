@@ -82,8 +82,8 @@ VLLM_VARCO_BASE_URL = os.getenv("VLLM_VARCO_BASE_URL", "http://localhost:8400/v1
 
 # ===== 임베딩 서버 설정 =====
 # bge-m3 임베딩 모델 원격 서버 사용 여부
-# 프로덕션에서는 true 권장 (성능 향상)
-USE_REMOTE_EMBEDDING = os.getenv("USE_REMOTE_EMBEDDING", "true").lower() == "true"  # 기본값 true로 변경
+# Docker 권한 문제로 로컬 모드를 기본값으로 설정
+USE_REMOTE_EMBEDDING = os.getenv("USE_REMOTE_EMBEDDING", "false").lower() == "true"  # 기본값 false (로컬 모드)
 # 임베딩 서버 URL (TEI 또는 커스텀 서버)
 EMBEDDING_SERVER_URL = os.getenv("EMBEDDING_SERVER_URL", "http://localhost:8401")
 
