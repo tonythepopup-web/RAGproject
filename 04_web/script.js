@@ -1,7 +1,10 @@
 // ============================================
 // 설정
 // ============================================
-const API_BASE_URL = 'http://localhost:8000';
+// 자동으로 현재 호스트의 API 서버 연결
+const API_BASE_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:8000'  // 로컬 개발
+    : `http://${window.location.hostname}:8000`;  // 회사 서버
 
 // ============================================
 // 전역 상태
