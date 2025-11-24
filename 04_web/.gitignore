@@ -1,0 +1,19 @@
+# 에디터 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS 파일
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 로그 파일
+*.log
+
+# 임시 파일
+*.tmp
+*.bak
+

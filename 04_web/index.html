@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>법률 검색 플랫폼 - AI 기반 법률 질의응답</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 배경 그라데이션 -->
+    <div class="background-gradient"></div>
+    
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="#0066FF"/>
+                    <path d="M20 10L13 16V30H17V23H23V30H27V16L20 10Z" fill="white"/>
+                </svg>
+                <span class="logo-text">법률 검색 플랫폼</span>
+            </div>
+            <div class="header-subtitle">AI 기반 법률/매뉴얼 질의응답 시스템</div>
+        </header>
+
+        <!-- Step 1: 질문 입력 -->
+        <section class="card card-question">
+            <div class="card-header">
+                <div class="step-badge">STEP 1</div>
+                <h2 class="card-title">질문하기</h2>
+            </div>
+            
+            <div class="form-section">
+                <!-- 검색 범위 선택 -->
+                <div class="scope-selector">
+                    <label class="scope-label">검색 범위 선택</label>
+                    <div class="radio-group">
+                        <label class="radio-button">
+                            <input type="radio" name="scope" value="law" id="scope-law">
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">법령</span>
+                        </label>
+                        <label class="radio-button">
+                            <input type="radio" name="scope" value="manual" id="scope-manual">
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">매뉴얼</span>
+                        </label>
+                        <label class="radio-button">
+                            <input type="radio" name="scope" value="all" id="scope-all" checked>
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">전체</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 질문 입력 -->
+                <div class="input-group">
+                    <label for="question" class="input-label">질문 입력</label>
+                    <textarea 
+                        id="question" 
+                        class="question-input" 
+                        rows="4" 
+                        placeholder="예: HACCP 인증 절차는 어떻게 되나요?"
+                    ></textarea>
+                    <div class="input-hint">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm1 12H7V7h2v5zm0-6H7V4h2v2z"/>
+                        </svg>
+                        <span>구체적인 질문일수록 정확한 답변을 받을 수 있습니다</span>
+                    </div>
+                </div>
+
+                <!-- 연관 자료 추천 버튼 -->
+                <button id="btn-recommend" class="btn btn-primary btn-large">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"/>
+                    </svg>
+                    <span>연관 자료 추천</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Step 2: 카테고리 선택 (초기 숨김) -->
+        <section id="section-categories" class="card card-categories hidden">
+            <div class="card-header">
+                <div class="step-badge">STEP 2</div>
+                <h2 class="card-title">검색할 자료 선택</h2>
+            </div>
+            
+            <div class="form-section">
+                <div class="category-hint">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM7 3h2v2H7V3zm0 4h2v6H7V7z"/>
+                    </svg>
+                    <span>관련도가 높은 자료를 선택하세요 (최대 5개, 다중 선택 가능)</span>
+                </div>
+                
+                <div id="category-list" class="category-grid">
+                    <!-- 동적으로 생성됨 -->
+                </div>
+
+                <button id="btn-search" class="btn btn-primary btn-large" disabled>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/>
+                    </svg>
+                    <span>검색 시작</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 로딩 상태 (초기 숨김) -->
+        <section id="section-loading" class="card card-loading hidden">
+            <div class="loading-container">
+                <div class="loading-spinner">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                </div>
+                <h3 class="loading-title">답변 생성 중</h3>
+                <p class="loading-text">AI가 법률 문서를 분석하고 있습니다...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">예상 소요 시간: 8-12초</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: 답변 표시 (초기 숨김) -->
+        <section id="section-answer" class="card card-answer hidden">
+            <div class="card-header">
+                <div class="step-badge">STEP 3</div>
+                <h2 class="card-title">답변</h2>
+            </div>
+            
+            <div class="answer-container">
+                <div class="answer-box">
+                    <div class="answer-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div id="answer-text" class="answer-text"></div>
+                </div>
+
+                <div class="answer-meta">
+                    <div class="meta-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM7 4h2v5H7V4zm0 6h2v2H7v-2z"/>
+                        </svg>
+                        <span>본 답변은 법률 자문이 아닙니다. 참고용으로만 사용하시기 바랍니다.</span>
+                    </div>
+                    <div class="meta-stats">
+                        <span id="timing-retrieval" class="stat-item"></span>
+                        <span id="timing-generation" class="stat-item"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: 참조 문서 (초기 숨김) -->
+        <section id="section-citations" class="card card-citations hidden">
+            <div class="card-header">
+                <div class="step-badge">STEP 4</div>
+                <h2 class="card-title">참조 문서</h2>
+            </div>
+            
+            <div class="citations-container">
+                <div class="citations-hint">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M2 3a1 1 0 011-1h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3zm2 2v6h8V5H4z"/>
+                    </svg>
+                    <span>각 문서의 평가를 통해 시스템 품질 향상에 기여할 수 있습니다</span>
+                </div>
+                
+                <div id="citations-list" class="citations-list">
+                    <!-- 동적으로 생성됨 -->
+                </div>
+
+                <button id="btn-submit-feedback" class="btn btn-secondary btn-large" disabled>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    <span>피드백 전송</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 푸터 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 법률 검색 플랫폼. All rights reserved.</p>
+                <p class="footer-tech">Powered by RAG Technology & AI</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 모달: 청크 상세보기 -->
+    <div id="modal-chunk" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">문서 전체 내용</h2>
+                <button class="modal-close" aria-label="닫기">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-chunk-text" class="chunk-detail"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast 알림 -->
+    <div id="toast" class="toast">
+        <div class="toast-icon"></div>
+        <span class="toast-message"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
