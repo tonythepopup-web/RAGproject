@@ -48,7 +48,7 @@ LLM_MODEL_ID     = "NCSOFT/VARCO-VISION-2.0-14B"               # LLM 모델 ID
 
 # 날짜별 인덱스 로드 (indexes/law/YYYY-MM-DD 구조)
 # 고정: 실제 인덱스가 존재하는 날짜로 설정
-INDEX_DATE = "2025-11-11"  # 인덱스 생성 날짜 (고정)
+INDEX_DATE = "2025-11-29"  # 인덱스 생성 날짜 (고정)
 PARENT_DIR       = str(SCRIPT_DIR.parent / "00_data" / "input" / "indexes" / "law" / INDEX_DATE)  # 인덱스 루트 디렉터리
 SAVE_LOG         = str(SCRIPT_DIR.parent / "00_data" / "output" / "logs" / "result.txt")  # (옵션) 검색 결과 저장 파일 경로
 TRIPLET_JSONL    = str(SCRIPT_DIR.parent / "00_data" / "output" / "training_data" / "triplets_group_bgem3.jsonl")  # 라벨 누적 저장 경로(JSONL)
@@ -130,7 +130,9 @@ def clean_source(src: str) -> str:
 desired_categories = [
     "가축전염병 예방법","건강기능식품에 관한 법률","농약관리법",
     "먹는물관리법","사료관리법","수입식품안전관리","식품위생법",
-    "식품ㆍ의약품분야 시험ㆍ검사","축산물 위생관리법","한국식품안전관리인증원의 설립 및 운영에 관한 법률"
+    "식품ㆍ의약품분야 시험ㆍ검사","축산물 위생관리법","한국식품안전관리인증원의 설립 및 운영에 관한 법률",
+    "개인정보 보호법", "근로기준법", "주택임대차보호법", "도로교통법", "소비자기본법", "성폭력범죄의 처벌 등에 관한 특례법",
+    "장애인차별금지 및 권리구제 등에 관한 법률", "양성평등기본법"
 ]
 # 숫자 선택(0=전체)과 한글 이름 입력을 모두 허용하기 위한 매핑 테이블
 mapping = {str(i): cat for i, cat in enumerate(["전체"] + desired_categories)}
